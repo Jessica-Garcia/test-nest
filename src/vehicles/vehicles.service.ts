@@ -56,4 +56,29 @@ export class VehiclesService {
         return vehicles;
     }
 
+    async executeUpdateVehicle(vehicleId: string , data: CreateVehicleDto ): Promise<Vehicle> {
+        const vehicle = await this.vehiclesRepository.findVehicleById(vehicleId);
+        const { plate } = data;
+        
+        if(!vehicle){
+            throw new HttpException({
+                status: HttpStatus.NOT_FOUND,
+                error: 'Vehicle not found',
+            }, HttpStatus.NOT_FOUND);
+        }
+    
+        if(vehicle.plate !== plate){
+          const plateAlreadyExists = await this.vehiclesRepository.findByPlate(plate);
+          
+          if(plateAlreadyExists){
+            throw new HttpException({
+                status: HttpStatus.BAD_REQUEST,
+                error: 'Vehicle already registered!',
+            }, HttpStatus.BAD_REQUEST);
+          }
+        }
+    
+        const updatedVehicle = await this.vehiclesRepository.updateVehicle(vehicleId, data);
+        return updatedVehicle;
+    }
 }

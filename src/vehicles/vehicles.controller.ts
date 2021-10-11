@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { CreateVehicleDto } from './dtos/create-vehicle.dto';
 import { ReturnVehicleDto } from './dtos/return-vehicle.dto';
 import { Vehicle } from './vehicle.entity';
@@ -29,5 +29,17 @@ export class VehiclesController {
     async handleListVehicles(): Promise<Vehicle[]>{
         const vehicles = await this.vehiclesService.executeListVehicles();
         return vehicles;
+    }
+
+    @Put(':id')
+    async handleUpdateVehicle(
+        @Body() createVehicleDto: CreateVehicleDto,
+        @Param('id') id: string,
+    ): Promise<ReturnVehicleDto>{
+        const vehicle = await this.vehiclesService.executeUpdateVehicle(id, createVehicleDto);
+        return {
+            vehicle,
+            message: 'Vehicle updated'
+        }
     }
 }

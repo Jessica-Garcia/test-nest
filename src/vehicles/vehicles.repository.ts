@@ -39,4 +39,11 @@ export class VehiclesRepository extends Repository<Vehicle>{
         return vehicles;
     }
 
+    async updateVehicle(id: string, data: CreateVehicleDto): Promise<Vehicle> {
+        await this.update(id, data);
+    
+        const updatedVehicle = await this.findOne(id);
+        return updatedVehicle;
+    }
+
 }
