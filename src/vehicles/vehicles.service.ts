@@ -37,4 +37,17 @@ export class VehiclesService {
 
         return vehicle
     }
+
+    
+    async executeFindVehicleById(vehicleId: string):Promise<Vehicle>{
+        const vehicle = await this.vehiclesRepository.findVehicleById(vehicleId);
+        if(!vehicle){
+            throw new HttpException({
+                status: HttpStatus.NOT_FOUND,
+                error: 'Vehicle not found',
+            }, HttpStatus.NOT_FOUND);
+        }
+      
+        return vehicle;
+    } 
 }

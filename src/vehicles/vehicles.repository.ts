@@ -29,7 +29,7 @@ export class VehiclesRepository extends Repository<Vehicle>{
         return vehicle;
     }
 
-    async findById(id: string): Promise<Vehicle> {
+    async findVehicleById(id: string): Promise<Vehicle> {
         const vehicle = await this.findOne(id);
         return vehicle;
     }
