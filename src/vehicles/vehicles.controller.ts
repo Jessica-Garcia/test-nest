@@ -24,4 +24,10 @@ export class VehiclesController {
         const vehicle = await this.vehiclesService.executeFindVehicleById(id);
         return vehicle;
     }
+
+    @Get()
+    async handleListVehicles(): Promise<Vehicle[]>{
+        const vehicles = await this.vehiclesService.executeListVehicles();
+        return vehicles;
+    }
 }

@@ -49,5 +49,11 @@ export class VehiclesService {
         }
       
         return vehicle;
-    } 
+    }
+    
+    async executeListVehicles(): Promise<Vehicle[]>{
+        const vehicles = await this.vehiclesRepository.listVehicles();
+        return vehicles;
+    }
+
 }

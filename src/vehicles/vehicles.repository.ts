@@ -34,4 +34,9 @@ export class VehiclesRepository extends Repository<Vehicle>{
         return vehicle;
     }
 
+    async listVehicles(): Promise<Vehicle[]> {
+        const vehicles = await this.find();
+        return vehicles;
+    }
+
 }
