@@ -81,4 +81,24 @@ export class VehiclesService {
         const updatedVehicle = await this.vehiclesRepository.updateVehicle(vehicleId, data);
         return updatedVehicle;
     }
+
+    async executeDeleteVehicle( id: string): Promise<void>{
+        const vehicle = await this.vehiclesRepository.findVehicleById(id);
+        
+        if(!vehicle){
+            throw new HttpException({
+                status: HttpStatus.NOT_FOUND,
+                error: 'Vehicle not found',
+            }, HttpStatus.NOT_FOUND); 
+        }
+    
+        const deletedVehicle = await this.vehiclesRepository.delete(id);
+    
+        if(deletedVehicle.affected < 1){
+            throw new HttpException({
+                status: HttpStatus.BAD_REQUEST,
+                error: 'An Error has ocurred! Try again',
+            }, HttpStatus.BAD_REQUEST);
+        }
+    }
 }

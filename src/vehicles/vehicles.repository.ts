@@ -1,4 +1,4 @@
-import { EntityRepository, Repository } from "typeorm";
+import { DeleteResult, EntityRepository, Repository } from "typeorm";
 import { CreateVehicleDto } from "./dtos/create-vehicle.dto";
 import { Vehicle } from "./vehicle.entity";
 
@@ -44,6 +44,11 @@ export class VehiclesRepository extends Repository<Vehicle>{
     
         const updatedVehicle = await this.findOne(id);
         return updatedVehicle;
+    }
+
+    async deleteVehicle(id: string): Promise<DeleteResult>{
+        const deletedVehicle = await this.delete(id);
+        return deletedVehicle;
     }
 
 }

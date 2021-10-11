@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { CreateVehicleDto } from './dtos/create-vehicle.dto';
 import { ReturnVehicleDto } from './dtos/return-vehicle.dto';
 import { Vehicle } from './vehicle.entity';
@@ -41,5 +41,10 @@ export class VehiclesController {
             vehicle,
             message: 'Vehicle updated'
         }
+    }
+
+    @Delete(':id')
+    async handleDeleteVehicle(@Param('id') id: string): Promise<void> {
+        await this.vehiclesService.executeDeleteVehicle(id);
     }
 }
